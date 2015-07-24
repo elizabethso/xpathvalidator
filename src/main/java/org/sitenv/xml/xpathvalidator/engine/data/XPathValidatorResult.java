@@ -10,6 +10,7 @@ public abstract class XPathValidatorResult {
 	protected String warningMessage;
 	protected String infoMessage;
 	
+	protected String baseXpathExpression;
 	protected String xpathExpression;
 	protected int nodeIndex;
 	@Override
@@ -104,6 +105,12 @@ public abstract class XPathValidatorResult {
 	}
 	public void setInfoMessage(String infoMessage) {
 		this.infoMessage = infoMessage;
+	}
+	public String getBaseXpathExpression() {
+		return baseXpathExpression;
+	}
+	public void setBaseXpathExpression(String baseXpathExpression) {
+		this.baseXpathExpression = baseXpathExpression;
 	}
 	public String getXpathExpression() {
 		return xpathExpression;
