@@ -10,6 +10,8 @@ public abstract class XPathValidatorResult {
 	protected String warningMessage;
 	protected String infoMessage;
 	
+	protected String baseXpathExpression;
+	protected int baseNodeIndex;
 	protected String xpathExpression;
 	protected int nodeIndex;
 	@Override
@@ -22,10 +24,13 @@ public abstract class XPathValidatorResult {
 		result = prime * result
 				+ ((infoMessage == null) ? 0 : infoMessage.hashCode());
 		result = prime * result + (information ? 1231 : 1237);
+		result = prime * result + baseNodeIndex;
 		result = prime * result + nodeIndex;
 		result = prime * result + (warning ? 1231 : 1237);
 		result = prime * result
 				+ ((warningMessage == null) ? 0 : warningMessage.hashCode());
+		result = prime * result
+				+ ((baseXpathExpression == null) ? 0 : baseXpathExpression.hashCode());
 		result = prime * result
 				+ ((xpathExpression == null) ? 0 : xpathExpression.hashCode());
 		return result;
@@ -53,6 +58,8 @@ public abstract class XPathValidatorResult {
 			return false;
 		if (information != other.information)
 			return false;
+		if (baseNodeIndex != other.baseNodeIndex)
+			return false;
 		if (nodeIndex != other.nodeIndex)
 			return false;
 		if (warning != other.warning)
@@ -61,6 +68,11 @@ public abstract class XPathValidatorResult {
 			if (other.warningMessage != null)
 				return false;
 		} else if (!warningMessage.equals(other.warningMessage))
+			return false;
+		if (baseXpathExpression == null) {
+			if (other.baseXpathExpression != null)
+				return false;
+		} else if (!baseXpathExpression.equals(other.baseXpathExpression))
 			return false;
 		if (xpathExpression == null) {
 			if (other.xpathExpression != null)
@@ -104,6 +116,18 @@ public abstract class XPathValidatorResult {
 	}
 	public void setInfoMessage(String infoMessage) {
 		this.infoMessage = infoMessage;
+	}
+	public String getBaseXpathExpression() {
+		return baseXpathExpression;
+	}
+	public void setBaseXpathExpression(String baseXpathExpression) {
+		this.baseXpathExpression = baseXpathExpression;
+	}
+	public int getBaseNodeIndex() {
+		return baseNodeIndex;
+	}
+	public void setBaseNodeIndex(int baseNodeIndex) {
+		this.baseNodeIndex = baseNodeIndex;
 	}
 	public String getXpathExpression() {
 		return xpathExpression;

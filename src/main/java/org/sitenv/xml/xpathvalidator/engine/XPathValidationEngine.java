@@ -1,5 +1,6 @@
 package org.sitenv.xml.xpathvalidator.engine;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.stream.StreamSource;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
@@ -20,6 +22,7 @@ import org.sitenv.xml.xpathvalidator.config.data.ValidatorConfig;
 import org.sitenv.xml.xpathvalidator.engine.data.XPathValidatorResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 public class XPathValidationEngine {
@@ -38,20 +41,16 @@ public class XPathValidationEngine {
 		return result;
 	}
 	
-	public void initialize(String configurationFile)
-	{
-		this.configs = ConfigurationLoader.loadConfiguration(configurationFile);
+	public void initialize(String configFile) {
+		this.configs = ConfigurationLoader.loadConfiguration(configFile);
 		
-		try {
-			
-			this.domFactory = DocumentBuilderFactory.newInstance();
-			this.builder = domFactory.newDocumentBuilder();
-		} 
-		catch (ParserConfigurationException e) 
-		{
-			logger.error(e);
-		} 
+		this.initializeBuilder();
+	}
+	
+	public void initialize(InputSource configFile) {
+		this.configs = ConfigurationLoader.loadConfiguration(configFile);
 		
+		this.initializeBuilder();
 	}
 	
 	public List<XPathValidatorResult> validate(String uri) throws IOException, SAXException {
@@ -146,6 +145,15 @@ public class XPathValidationEngine {
 		return results;
 	}
 	
-	
+	private void initializeBuilder() {
+		try {
+			this.domFactory = DocumentBuilderFactory.newInstance();
+			this.builder = domFactory.newDocumentBuilder();
+		} 
+		catch (ParserConfigurationException e) 
+		{
+			logger.error(e);
+		}
+	}
 	
 }

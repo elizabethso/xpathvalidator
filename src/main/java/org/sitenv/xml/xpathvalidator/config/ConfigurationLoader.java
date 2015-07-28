@@ -1,6 +1,10 @@
 package org.sitenv.xml.xpathvalidator.config;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +12,8 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Source;
+import javax.xml.transform.stream.StreamSource;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
@@ -20,6 +26,7 @@ import org.sitenv.xml.xpathvalidator.config.data.ValidatorConfig;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 
@@ -28,7 +35,27 @@ public abstract class ConfigurationLoader {
 	public static final XPathFactory XPATH = XPathFactory.newInstance();
 	public static final Logger logger = Logger.getLogger(ConfigurationLoader.class);
 	
-	public static List<Configuration> loadConfiguration(String configFile) 
+	public static List<Configuration> loadConfiguration(String configFile) {
+		FileInputStream configFileStream = null;
+		
+		try {
+			return loadConfiguration(new InputSource((configFileStream = new FileInputStream(configFile))));
+		} catch (IOException e) {
+			logger.error(e);
+		} finally {
+			try {
+				if (configFileStream != null) {
+					configFileStream.close();
+				}
+			} catch (IOException e) {
+				logger.error(e);
+			}
+		}
+		
+		return null;
+	}
+	
+	public static List<Configuration> loadConfiguration(InputSource configFile) 
 	{
 		List<Configuration> configItems = null;
 		
