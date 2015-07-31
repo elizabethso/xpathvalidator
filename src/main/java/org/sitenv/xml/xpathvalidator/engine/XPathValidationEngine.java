@@ -1,6 +1,5 @@
 package org.sitenv.xml.xpathvalidator.engine;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -9,7 +8,6 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.stream.StreamSource;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
@@ -90,7 +88,6 @@ public class XPathValidationEngine {
 							if (obj instanceof XPathNodeValidator) {
 							
 								XPathNodeValidator validator = (XPathNodeValidator)obj;
-								
 								XPathValidatorResult result = validator.validateNode(config.getXpathExpression(), xpath, nodes.item(i), i, validatorConfig.getParameters());
 								
 								if (results == null) {
